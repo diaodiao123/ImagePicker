@@ -1,0 +1,142 @@
+<LinearLayout android:id="@+id/content"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#ff323232"
+              android:orientation="vertical">
+
+    <include
+        android:visibility="gone"
+        android:id="@+id/top_bar"
+        layout="@layout/include_top_bar"/>
+    <RelativeLayout
+        android:id="@+id/rl_top"
+        android:layout_width="match_parent"
+        android:background="#ff323232"
+        android:layout_height="44dp">
+
+        <LinearLayout
+            android:id="@+id/ll_pic"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_title_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="最近项目"
+                android:textColor="#fff"
+                android:layout_marginRight="5dp"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/iv_title_image"
+                android:layout_width="17dp"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_down" />
+        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_cancel"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:layout_width="wrap_content"
+            android:textColor="#fff"
+            android:textSize="16sp"
+            android:text="取消"
+            android:gravity="center"
+            android:layout_alignParentRight="true"
+            android:layout_height="match_parent"/>
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#fff">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/image_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingBottom="50dp"
+           />
+
+        <RelativeLayout
+            android:visibility="gone"
+            android:id="@+id/footer_bar"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/ip_color_primary">
+
+            <RelativeLayout
+                android:id="@+id/ll_dir"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp">
+
+                <TextView
+                    android:id="@+id/tv_dir"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:ellipsize="end"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:text="@string/ip_all_images"
+                    android:textColor="#CFCFCF"
+                    android:textSize="16sp"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/tv_dir"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_toRightOf="@id/tv_dir"
+                    android:src="@mipmap/text_indicator"/>
+
+            </RelativeLayout>
+
+
+            <TextView
+                android:id="@+id/btn_preview"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:background="@null"
+                android:gravity="center"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:text="预览(3)"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"/>
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:background="#fff"
+            android:layout_height="52dp">
+            <Button
+                android:id="@+id/btn_bottom_ok"
+                android:layout_width="110dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:textAllCaps="false"
+                android:background="@drawable/selector_bottom_ok"
+                android:text="完成"
+                android:textColor="#ffffff"
+                android:textSize="16sp" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+</LinearLayout>

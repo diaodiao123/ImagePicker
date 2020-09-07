@@ -12,7 +12,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -93,7 +92,7 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_image_grid);
+        setContentView(R.layout.activity_image_gride);
 
         imagePicker = ImagePicker.getInstance();
         imagePicker.clear();
