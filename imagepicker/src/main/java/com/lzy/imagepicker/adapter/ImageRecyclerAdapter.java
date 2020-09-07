@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 
 import com.lzy.imagepicker.ImagePicker;
@@ -15,7 +16,6 @@ import com.lzy.imagepicker.ui.ImageBaseActivity;
 import com.lzy.imagepicker.ui.ImageGridActivity;
 import com.lzy.imagepicker.util.InnerToaster;
 import com.lzy.imagepicker.util.Utils;
-import com.lzy.imagepicker.view.SuperCheckBox;
 
 import java.util.ArrayList;
 
@@ -113,7 +113,7 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
         ImageView ivThumb;
         View mask;
         View checkView;
-        SuperCheckBox cbCheck;
+        CheckBox cbCheck;
 
 
         ImageViewHolder(View itemView) {
@@ -122,7 +122,7 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
             ivThumb = (ImageView) itemView.findViewById(R.id.iv_thumb);
             mask = itemView.findViewById(R.id.mask);
             checkView=itemView.findViewById(R.id.checkView);
-            cbCheck = (SuperCheckBox) itemView.findViewById(R.id.cb_check);
+            cbCheck =itemView.findViewById(R.id.cb_check);
             itemView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mImageSize));
         }
 
@@ -140,12 +140,18 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
                     cbCheck.setChecked(!cbCheck.isChecked());
                     int selectLimit = imagePicker.getSelectLimit();
                     if (cbCheck.isChecked() && mSelectedImages.size() >= selectLimit) {
-                        InnerToaster.obj(mActivity).show(mActivity.getString(R.string.ip_select_limit, selectLimit));
-                        cbCheck.setChecked(false);
-                        mask.setVisibility(View.GONE);
+                        if (imagePicker.getSelectSingle()&&imagePicker.getSelectLimit()==1){
+                           int mPosition = imagePicker.isShowCamera() ? position - 1 : position;
+                            for (int i = 0; i <images.size() ; i++) {
+                                ImageItem item = images.get(i);
+                                imagePicker.addSelectedImageItem(i, item,mPosition==i);
+                            }
+                        }else {
+                            InnerToaster.obj(mActivity).show(mActivity.getString(R.string.ip_select_limit, selectLimit));
+                            cbCheck.setChecked(false);
+                        }
                     } else {
                         imagePicker.addSelectedImageItem(position, imageItem, cbCheck.isChecked());
-                        mask.setVisibility(View.VISIBLE);
                     }
                 }
             });
@@ -153,10 +159,8 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
                 cbCheck.setVisibility(View.VISIBLE);
                 boolean checked = mSelectedImages.contains(imageItem);
                 if (checked) {
-                    mask.setVisibility(View.VISIBLE);
                     cbCheck.setChecked(true);
                 } else {
-                    mask.setVisibility(View.GONE);
                     cbCheck.setChecked(false);
                 }
             } else {

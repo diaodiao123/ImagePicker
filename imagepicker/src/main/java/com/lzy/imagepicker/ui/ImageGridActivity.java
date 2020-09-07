@@ -10,6 +10,9 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lzy.imagepicker.DataHolder;
@@ -56,6 +59,11 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
     private boolean directPhoto = false;
     private RecyclerView mRecyclerView;
     private ImageRecyclerAdapter mRecyclerAdapter;
+    private RelativeLayout mTop;
+    private LinearLayout mllPic;
+    private TextView mTvTitleList;
+    private ImageView mImageView;
+    private TextView mTvCancel;
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
@@ -79,7 +87,6 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
         imagePicker.addOnImageSelectedListener(this);
         if (imagePicker.getSelectLimit() == 0 || imagePicker.getSelectLimit() == 1) {
             imagePicker.setSelectLimit(1);
-            imagePicker.setMultiMode(false);
         }
 
         Intent data = getIntent();
@@ -95,25 +102,33 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler);
 
         findViewById(R.id.btn_back).setOnClickListener(this);
-        mBtnOk = (Button) findViewById(R.id.btn_ok);
+        mBtnOk = (Button) findViewById(R.id.btn_bottom_ok);
         mBtnOk.setOnClickListener(this);
         mBtnPre = (TextView) findViewById(R.id.btn_preview);
         mBtnPre.setOnClickListener(this);
         mFooterBar = findViewById(R.id.footer_bar);
         mllDir = findViewById(R.id.ll_dir);
         mllDir.setOnClickListener(this);
+        mTop=findViewById(R.id.rl_top);
+        mllPic=findViewById(R.id.ll_pic);
+        mllPic.setOnClickListener(this);
         mtvDir = (TextView) findViewById(R.id.tv_dir);
-        if (imagePicker.isMultiMode()) {
-            mBtnOk.setVisibility(View.VISIBLE);
-            mBtnPre.setVisibility(View.VISIBLE);
-        } else {
-            mBtnOk.setVisibility(View.GONE);
-            mBtnPre.setVisibility(View.GONE);
-        }
-
+        mTvTitleList=findViewById(R.id.tv_title_list);
+        mImageView=findViewById(R.id.iv_title_image);
+        mTvCancel=findViewById(R.id.tv_cancel);
+        mTvCancel.setOnClickListener(this);
+//        if (imagePicker.isMultiMode()) {
+//            mBtnOk.setVisibility(View.VISIBLE);
+//            mBtnPre.setVisibility(View.VISIBLE);
+//        } else {
+//            mBtnOk.setVisibility(View.GONE);
+//            mBtnPre.setVisibility(View.GONE);
+//        }
+        mBtnOk.setVisibility(View.VISIBLE);
+        mBtnPre.setVisibility(View.VISIBLE);
         mImageFolderAdapter = new ImageFolderAdapter(this, null);
         mRecyclerAdapter = new ImageRecyclerAdapter(this, null);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+        mRecyclerView.setLayoutManager(new GridLayoutManager(this, 4));
         mRecyclerView.setAdapter(mRecyclerAdapter);
         onImageSelected(0, null, false);
 
@@ -171,7 +186,7 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        if (id == R.id.btn_ok) {
+        if (id == R.id.btn_bottom_ok) {
             Intent intent = new Intent();
             intent.putExtra(ImagePicker.EXTRA_RESULT_ITEMS, imagePicker.getSelectedImages());
             setResult(ImagePicker.RESULT_CODE_ITEMS, intent);
@@ -185,7 +200,8 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
             if (mFolderPopupWindow.isShowing()) {
                 mFolderPopupWindow.dismiss();
             } else {
-                mFolderPopupWindow.showAtLocation(mFooterBar, Gravity.NO_GRAVITY, 0, 0);
+                mFolderPopupWindow.showAsDropDown(mTop);
+               // mFolderPopupWindow.showAtLocation(mFooterBar, Gravity.NO_GRAVITY, 0, 0);
                 int index = mImageFolderAdapter.getSelectIndex();
                 index = index == 0 ? index : index - 1;
                 mFolderPopupWindow.setSelection(index);
@@ -199,11 +215,29 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
             startActivityForResult(intent, ImagePicker.REQUEST_CODE_PREVIEW);
         } else if (id == R.id.btn_back) {
             finish();
+        }else if (id==R.id.ll_pic){
+            if (mImageFolders == null) {
+                return;
+            }
+            createPopupFolderList();
+            mImageFolderAdapter.refreshData(mImageFolders);
+            if (mFolderPopupWindow.isShowing()) {
+                mFolderPopupWindow.dismiss();
+            } else {
+                mFolderPopupWindow.showAsDropDown(mTop);
+                // mFolderPopupWindow.showAtLocation(mFooterBar, Gravity.NO_GRAVITY, 0, 0);
+                int index = mImageFolderAdapter.getSelectIndex();
+                index = index == 0 ? index : index - 1;
+                mFolderPopupWindow.setSelection(index);
+                 mImageView.setImageResource(R.mipmap.ic_up);
+            }
+        }else if (id==R.id.tv_cancel){
+            finish();
         }
     }
 
     private void createPopupFolderList() {
-        mFolderPopupWindow = new FolderPopUpWindow(this, mImageFolderAdapter);
+        mFolderPopupWindow = new FolderPopUpWindow(this, mImageFolderAdapter,mImageView);
         mFolderPopupWindow.setOnItemClickListener(new FolderPopUpWindow.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
@@ -214,6 +248,7 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
                 if (null != imageFolder) {
                     mRecyclerAdapter.refreshData(imageFolder.images);
                     mtvDir.setText(imageFolder.name);
+                    mTvTitleList.setText(imageFolder.name);
                 }
             }
         });
@@ -230,18 +265,21 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
             mRecyclerAdapter.refreshData(imageFolders.get(0).images);
         }
         mRecyclerAdapter.setOnImageItemClickListener(this);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+        mRecyclerView.setLayoutManager(new GridLayoutManager(this, 4));
         if (mRecyclerView.getItemDecorationCount() < 1) {
-            mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(3, Utils.dp2px(this, 2), false));
+            mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(4, Utils.dp2px(this, 6), false));
         }
         mRecyclerView.setAdapter(mRecyclerAdapter);
         mImageFolderAdapter.refreshData(imageFolders);
+        if (mImageFolders!=null&&mImageFolders.size()>0){
+            mTvTitleList.setText( mImageFolders.get(0).name);
+        }
     }
 
     @Override
     public void onImageItemClick(View view, ImageItem imageItem, int position) {
         position = imagePicker.isShowCamera() ? position - 1 : position;
-        if (imagePicker.isMultiMode()) {
+        if (imagePicker.isMultiMode()&&imagePicker.getShowPre()) {
             Intent intent = new Intent(ImageGridActivity.this, ImagePreviewActivity.class);
             intent.putExtra(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, position);
 
@@ -270,19 +308,19 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
     @Override
     public void onImageSelected(int position, ImageItem item, boolean isAdd) {
         if (imagePicker.getSelectImageCount() > 0) {
-            mBtnOk.setText(getString(R.string.ip_select_complete, imagePicker.getSelectImageCount(), imagePicker.getSelectLimit()));
+            //mBtnOk.setText(getString(R.string.ip_select_complete, imagePicker.getSelectImageCount(), imagePicker.getSelectLimit()));
             mBtnOk.setEnabled(true);
             mBtnPre.setEnabled(true);
             mBtnPre.setText(getResources().getString(R.string.ip_preview_count, imagePicker.getSelectImageCount()));
             mBtnPre.setTextColor(ContextCompat.getColor(this, R.color.ip_text_primary_inverted));
-            mBtnOk.setTextColor(ContextCompat.getColor(this, R.color.ip_text_primary_inverted));
+           // mBtnOk.setTextColor(ContextCompat.getColor(this, R.color.ip_text_primary_inverted));
         } else {
-            mBtnOk.setText(getString(R.string.ip_complete));
+           // mBtnOk.setText(getString(R.string.ip_complete));
             mBtnOk.setEnabled(false);
             mBtnPre.setEnabled(false);
             mBtnPre.setText(getResources().getString(R.string.ip_preview));
             mBtnPre.setTextColor(ContextCompat.getColor(this, R.color.ip_text_secondary_inverted));
-            mBtnOk.setTextColor(ContextCompat.getColor(this, R.color.ip_text_secondary_inverted));
+            //mBtnOk.setTextColor(ContextCompat.getColor(this, R.color.ip_text_secondary_inverted));
         }
         for (int i = imagePicker.isShowCamera() ? 1 : 0; i < mRecyclerAdapter.getItemCount(); i++) {
             if (mRecyclerAdapter.getItem(i).path != null && mRecyclerAdapter.getItem(i).path.equals(item.path)) {

@@ -14,6 +14,7 @@ public class ImageItem implements Serializable, Parcelable {
     public int height;
     public String mimeType;
     public long addTime;
+    private Boolean isSelect=false;
 
     @Override
     public boolean equals(Object o) {
@@ -40,6 +41,7 @@ public class ImageItem implements Serializable, Parcelable {
         dest.writeInt(this.height);
         dest.writeString(this.mimeType);
         dest.writeLong(this.addTime);
+        dest.writeBoolean(this.isSelect);
     }
 
     public ImageItem() {
@@ -53,6 +55,7 @@ public class ImageItem implements Serializable, Parcelable {
         this.height = in.readInt();
         this.mimeType = in.readString();
         this.addTime = in.readLong();
+        this.isSelect=in.readBoolean();
     }
 
     public static final Parcelable.Creator<ImageItem> CREATOR = new Parcelable.Creator<ImageItem>() {
@@ -66,4 +69,12 @@ public class ImageItem implements Serializable, Parcelable {
             return new ImageItem[size];
         }
     };
+
+    public Boolean getSelect() {
+        return isSelect;
+    }
+
+    public void setSelect(Boolean select) {
+        isSelect = select;
+    }
 }

@@ -39,7 +39,7 @@ public class ImageDataSource implements LoaderManager.LoaderCallbacks<Cursor> {
     public ImageDataSource(FragmentActivity activity, String path, OnImagesLoadedListener loadedListener) {
         this.activity = activity;
         this.loadedListener = loadedListener;
-        mLoadedCount=0;
+        mLoadedCount = 0;
 
         LoaderManager loaderManager = activity.getSupportLoaderManager();
         if (path == null) {
@@ -54,11 +54,19 @@ public class ImageDataSource implements LoaderManager.LoaderCallbacks<Cursor> {
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         CursorLoader cursorLoader = null;
-        if (id == LOADER_ALL)
-            cursorLoader = new CursorLoader(activity, MediaStore.Images.Media.EXTERNAL_CONTENT_URI, IMAGE_PROJECTION, null, null, IMAGE_PROJECTION[6] + " DESC");
+        //扫描所有图片
+        if (id == LOADER_ALL){
+            if (ImagePicker.getInstance().getShowGif()) {
+                cursorLoader = new CursorLoader(activity, MediaStore.Images.Media.EXTERNAL_CONTENT_URI, IMAGE_PROJECTION, null, null, IMAGE_PROJECTION[6] + " DESC");
+
+            } else {
+                cursorLoader = new CursorLoader(activity, MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                        IMAGE_PROJECTION, MediaStore.Images.Media.DISPLAY_NAME + " NOT LIKE ?", new String[]{"%gif"}, IMAGE_PROJECTION[6] + " DESC");
+            }
+        }
+        //扫描某个图片文件夹
         if (id == LOADER_CATEGORY)
             cursorLoader = new CursorLoader(activity, MediaStore.Images.Media.EXTERNAL_CONTENT_URI, IMAGE_PROJECTION, IMAGE_PROJECTION[1] + " like '%" + args.getString("path") + "%'", null, IMAGE_PROJECTION[6] + " DESC");
-
         return cursorLoader;
     }
 
@@ -132,4 +140,5 @@ public class ImageDataSource implements LoaderManager.LoaderCallbacks<Cursor> {
     public interface OnImagesLoadedListener {
         void onImagesLoaded(List<ImageFolder> imageFolders);
     }
+
 }

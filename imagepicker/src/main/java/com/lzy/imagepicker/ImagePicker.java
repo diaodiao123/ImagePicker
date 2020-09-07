@@ -46,7 +46,7 @@ public class ImagePicker {
     public static final String EXTRA_FROM_ITEMS = "extra_from_items";
 
     private boolean multiMode = true;
-    private int selectLimit = 9;
+    private int selectLimit = 1;
     private boolean crop = true;
     private boolean showCamera = true;
     private boolean isSaveRectangle = false;
@@ -58,6 +58,26 @@ public class ImagePicker {
     private CropImageView.Style style = CropImageView.Style.RECTANGLE;
     private File cropCacheFolder;
     private File takeImageFile;
+    private Boolean isShowPre=true;//是否展示预览
+    private Boolean isSelectSingle=false;//是否每次选择一张图片
+
+    public Boolean getShowGif() {
+        return isShowGif;
+    }
+
+    public void setShowGif(Boolean showGif) {
+        isShowGif = showGif;
+    }
+
+    private Boolean isShowGif=true;
+
+    public Boolean getSelectSingle() {
+        return isSelectSingle;
+    }
+
+    public void setSelectSingle(Boolean selectSingle) {
+        isSelectSingle = selectSingle;
+    }
 
     public FreeCropImageView.CropMode mFreeCropMode = com.isseiaoki.simplecropview.FreeCropImageView.CropMode.FREE;
     public boolean isFreeCrop = false;
@@ -67,7 +87,6 @@ public class ImagePicker {
     private List<OnImageSelectedListener> mImageSelectedListeners;
 
     private static ImagePicker mInstance;
-
 
     private ImagePicker() {
     }
@@ -288,6 +307,14 @@ public class ImagePicker {
         Uri contentUri = Uri.fromFile(file);
         mediaScanIntent.setData(contentUri);
         context.sendBroadcast(mediaScanIntent);
+    }
+
+    public Boolean getShowPre() {
+        return isShowPre;
+    }
+
+    public void setShowPre(Boolean showPre) {
+        isShowPre = showPre;
     }
 
     public interface OnImageSelectedListener {
