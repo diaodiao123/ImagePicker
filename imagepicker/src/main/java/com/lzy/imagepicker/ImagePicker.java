@@ -70,6 +70,8 @@ public class ImagePicker {
     private CropImageView.Style style = CropImageView.Style.RECTANGLE;
     private File cropCacheFolder;
     private File takeImageFile;
+    private Boolean isShowPre=true;//是否展示预览
+    private Boolean isSelectSingle=false;//是否每次选择一张图片
 
     public FreeCropImageView.CropMode mFreeCropMode = com.isseiaoki.simplecropview.FreeCropImageView.CropMode.FREE;
     public boolean isFreeCrop = false;
@@ -402,4 +404,32 @@ public class ImagePicker {
         mFreeCropMode = aCropMode;
         isFreeCrop = need;
     }
+
+    public Boolean getShowGif() {
+        return isShowGif;
+    }
+
+    public void setShowGif(Boolean showGif) {
+        isShowGif = showGif;
+    }
+
+    private Boolean isShowGif=true;
+
+    public Boolean getSelectSingle() {
+        return isSelectSingle;
+    }
+
+    public void setSelectSingle(Boolean selectSingle) {
+        isSelectSingle = selectSingle;
+    }
+    public Boolean getShowPre() {
+        return isShowPre;
+    }
+
+    public void setShowPre(Boolean showPre) {
+        isShowPre = showPre;
+    }
+
+
+
 }

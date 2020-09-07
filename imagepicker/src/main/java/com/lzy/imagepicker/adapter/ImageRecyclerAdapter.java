@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 
 import com.lzy.imagepicker.ImagePicker;
@@ -23,13 +24,13 @@ import com.lzy.imagepicker.view.SuperCheckBox;
 import java.util.ArrayList;
 
 /**
- * ¼ÓÔØÏà²áÍ¼Æ¬µÄRecyclerViewÊÊÅäÆ÷
+ * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¼Æ¬ï¿½ï¿½RecyclerViewï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
  *
- * ÓÃÓÚÌæ»»Ô­ÏîÄ¿µÄGridView£¬Ê¹ÓÃ¾Ö²¿Ë¢ÐÂ½â¾öÑ¡ÖÐÕÕÆ¬³öÏÖÉÁ¶¯ÎÊÌâ
+ * ï¿½ï¿½ï¿½ï¿½ï¿½æ»»Ô­ï¿½ï¿½Ä¿ï¿½ï¿½GridViewï¿½ï¿½Ê¹ï¿½Ã¾Ö²ï¿½Ë¢ï¿½Â½ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½Æ¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
  *
- * Ìæ»»ÎªRecyclerViewºóÖ»ÊÇ²»ÔÙ»áµ¼ÖÂÈ«¾ÖË¢ÐÂ£¬
+ * ï¿½æ»»ÎªRecyclerViewï¿½ï¿½Ö»ï¿½Ç²ï¿½ï¿½Ù»áµ¼ï¿½ï¿½È«ï¿½ï¿½Ë¢ï¿½Â£ï¿½
  *
- * µ«»¹ÊÇ»á³öÏÖÃ÷ÏÔµÄÖØÐÂ¼ÓÔØÍ¼Æ¬£¬¿ÉÄÜÊÇpicassoÍ¼Æ¬¼ÓÔØ¿ò¼ÜµÄÎÊÌâ
+ * ï¿½ï¿½ï¿½ï¿½ï¿½Ç»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ôµï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½Í¼Æ¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½picassoÍ¼Æ¬ï¿½ï¿½ï¿½Ø¿ï¿½Üµï¿½ï¿½ï¿½ï¿½ï¿½
  *
  * Author: nanchen
  * Email: liushilin520@foxmail.com
@@ -39,16 +40,16 @@ import java.util.ArrayList;
 public class ImageRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
 
 
-    private static final int ITEM_TYPE_CAMERA = 0;  //µÚÒ»¸öÌõÄ¿ÊÇÏà»ú
-    private static final int ITEM_TYPE_NORMAL = 1;  //µÚÒ»¸öÌõÄ¿²»ÊÇÏà»ú
+    private static final int ITEM_TYPE_CAMERA = 0;  //ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½
+    private static final int ITEM_TYPE_NORMAL = 1;  //ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     private ImagePicker imagePicker;
     private Activity mActivity;
-    private ArrayList<ImageItem> images;       //µ±Ç°ÐèÒªÏÔÊ¾µÄËùÓÐµÄÍ¼Æ¬Êý¾Ý
-    private ArrayList<ImageItem> mSelectedImages; //È«¾Ö±£´æµÄÒÑ¾­Ñ¡ÖÐµÄÍ¼Æ¬Êý¾Ý
-    private boolean isShowCamera;         //ÊÇ·ñÏÔÊ¾ÅÄÕÕ°´Å¥
-    private int mImageSize;               //Ã¿¸öÌõÄ¿µÄ´óÐ¡
+    private ArrayList<ImageItem> images;       //ï¿½ï¿½Ç°ï¿½ï¿½Òªï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½Í¼Æ¬ï¿½ï¿½ï¿½ï¿½
+    private ArrayList<ImageItem> mSelectedImages; //È«ï¿½Ö±ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¾ï¿½Ñ¡ï¿½Ðµï¿½Í¼Æ¬ï¿½ï¿½ï¿½ï¿½
+    private boolean isShowCamera;         //ï¿½Ç·ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½Õ°ï¿½Å¥
+    private int mImageSize;               //Ã¿ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½Ä´ï¿½Ð¡
     private LayoutInflater mInflater;
-    private OnImageItemClickListener listener;   //Í¼Æ¬±»µã»÷µÄ¼àÌý
+    private OnImageItemClickListener listener;   //Í¼Æ¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½
 
     public void setOnImageItemClickListener(OnImageItemClickListener listener) {
         this.listener = listener;
@@ -65,7 +66,7 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
     }
 
     /**
-     * ¹¹Ôì·½·¨
+     * ï¿½ï¿½ï¿½ì·½ï¿½ï¿½
      */
     public ImageRecyclerAdapter(Activity activity, ArrayList<ImageItem> images) {
         this.mActivity = activity;
@@ -127,7 +128,7 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
         ImageView ivThumb;
         View mask;
         View checkView;
-        SuperCheckBox cbCheck;
+        CheckBox cbCheck;
 
 
         ImageViewHolder(View itemView) {
@@ -136,8 +137,8 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
             ivThumb = (ImageView) itemView.findViewById(R.id.iv_thumb);
             mask = itemView.findViewById(R.id.mask);
             checkView=itemView.findViewById(R.id.checkView);
-            cbCheck = (SuperCheckBox) itemView.findViewById(R.id.cb_check);
-            itemView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mImageSize)); //ÈÃÍ¼Æ¬ÊÇ¸öÕý·½ÐÎ
+            cbCheck =itemView.findViewById(R.id.cb_check);
+            itemView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mImageSize)); //ï¿½ï¿½Í¼Æ¬ï¿½Ç¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         }
 
         void bind(final int position){
@@ -154,30 +155,34 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
                     cbCheck.setChecked(!cbCheck.isChecked());
                     int selectLimit = imagePicker.getSelectLimit();
                     if (cbCheck.isChecked() && mSelectedImages.size() >= selectLimit) {
-                        InnerToaster.obj(mActivity).show(mActivity.getString(R.string.ip_select_limit, selectLimit));
-                        cbCheck.setChecked(false);
-                        mask.setVisibility(View.GONE);
+                        if (imagePicker.getSelectSingle()&&imagePicker.getSelectLimit()==1){
+                            int mPosition = imagePicker.isShowCamera() ? position - 1 : position;
+                            for (int i = 0; i <images.size() ; i++) {
+                                ImageItem item = images.get(i);
+                                imagePicker.addSelectedImageItem(i, item,mPosition==i);
+                            }
+                        }else {
+                            InnerToaster.obj(mActivity).show(mActivity.getString(R.string.ip_select_limit, selectLimit));
+                            cbCheck.setChecked(false);
+                        }
                     } else {
                         imagePicker.addSelectedImageItem(position, imageItem, cbCheck.isChecked());
-                        mask.setVisibility(View.VISIBLE);
                     }
                 }
             });
-            //¸ù¾ÝÊÇ·ñ¶àÑ¡£¬ÏÔÊ¾»òÒþ²Øcheckbox
+            //ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½checkbox
             if (imagePicker.isMultiMode()) {
                 cbCheck.setVisibility(View.VISIBLE);
                 boolean checked = mSelectedImages.contains(imageItem);
                 if (checked) {
-                    mask.setVisibility(View.VISIBLE);
                     cbCheck.setChecked(true);
                 } else {
-                    mask.setVisibility(View.GONE);
                     cbCheck.setChecked(false);
                 }
             } else {
                 cbCheck.setVisibility(View.GONE);
             }
-            imagePicker.getImageLoader().displayImage(mActivity, imageItem.path, ivThumb, mImageSize, mImageSize); //ÏÔÊ¾Í¼Æ¬
+            imagePicker.getImageLoader().displayImage(mActivity, imageItem.path, ivThumb, mImageSize, mImageSize); //ï¿½ï¿½Ê¾Í¼Æ¬
         }
 
     }
@@ -192,7 +197,7 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
         }
 
         void bindCamera(){
-            mItemView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mImageSize)); //ÈÃÍ¼Æ¬ÊÇ¸öÕý·½ÐÎ
+            mItemView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mImageSize)); //ï¿½ï¿½Í¼Æ¬ï¿½Ç¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             mItemView.setTag(null);
             mItemView.setOnClickListener(new View.OnClickListener() {
                 @Override

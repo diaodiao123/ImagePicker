@@ -2,17 +2,61 @@
               xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="#000"
+              android:background="#ff323232"
               android:orientation="vertical">
 
     <include
+        android:visibility="gone"
         android:id="@+id/top_bar"
         layout="@layout/include_top_bar"/>
+    <RelativeLayout
+        android:id="@+id/rl_top"
+        android:layout_width="match_parent"
+        android:background="#ff323232"
+        android:layout_height="44dp">
+
+        <LinearLayout
+            android:id="@+id/ll_pic"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_title_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="最近项目"
+                android:textColor="#fff"
+                android:layout_marginRight="5dp"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/iv_title_image"
+                android:layout_width="17dp"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_down" />
+        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_cancel"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:layout_width="wrap_content"
+            android:textColor="#fff"
+            android:textSize="16sp"
+            android:text="取消"
+            android:gravity="center"
+            android:layout_alignParentRight="true"
+            android:layout_height="match_parent"/>
+
+    </RelativeLayout>
+
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#111111">
+        android:background="#fff">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler"
@@ -20,11 +64,10 @@
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:paddingBottom="50dp"
-            android:paddingLeft="2dp"
-            android:paddingRight="2dp"
-            android:paddingTop="2dp"/>
+           />
 
         <RelativeLayout
+            android:visibility="gone"
             android:id="@+id/footer_bar"
             android:layout_width="match_parent"
             android:layout_height="48dp"
@@ -76,6 +119,23 @@
                 android:textAllCaps="false"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp"/>
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:background="#fff"
+            android:layout_height="52dp">
+            <Button
+                android:id="@+id/btn_bottom_ok"
+                android:layout_width="110dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:textAllCaps="false"
+                android:background="@drawable/selector_bottom_ok"
+                android:text="完成"
+                android:textColor="#ffffff"
+                android:textSize="16sp" />
 
         </RelativeLayout>
     </RelativeLayout>

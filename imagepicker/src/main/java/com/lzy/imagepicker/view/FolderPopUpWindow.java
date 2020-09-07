@@ -4,13 +4,16 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
@@ -19,11 +22,11 @@ import com.lzy.imagepicker.R;
 
 /**
  * ================================================
- * ×÷    Õß£ºjeasonlzy£¨ÁÎ×ÓÒ¢£©GithubµØÖ·£ºhttps://github.com/jeasonlzy0216
- * °æ    ±¾£º1.0
- * ´´½¨ÈÕÆÚ£º16/8/1
- * Ãè    Êö£º
- * ÐÞ¶©ÀúÊ·£º
+ * ï¿½ï¿½    ï¿½ß£ï¿½jeasonlzyï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò¢ï¿½ï¿½Githubï¿½ï¿½Ö·ï¿½ï¿½https://github.com/jeasonlzy0216
+ * ï¿½ï¿½    ï¿½ï¿½ï¿½ï¿½1.0
+ * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú£ï¿½16/8/1
+ * ï¿½ï¿½    ï¿½ï¿½ï¿½ï¿½
+ * ï¿½Þ¶ï¿½ï¿½ï¿½Ê·ï¿½ï¿½
  * ================================================
  */
 public class FolderPopUpWindow extends PopupWindow implements View.OnClickListener {
@@ -33,10 +36,11 @@ public class FolderPopUpWindow extends PopupWindow implements View.OnClickListen
     private final View masker;
     private final View marginView;
     private int marginPx;
+    private ImageView mImageView;
 
-    public FolderPopUpWindow(Context context, BaseAdapter adapter) {
+    public FolderPopUpWindow(Context context, BaseAdapter adapter,ImageView imageView) {
         super(context);
-
+        this.mImageView=imageView;
         final View view = View.inflate(context, R.layout.pop_folder, null);
         masker = view.findViewById(R.id.masker);
         masker.setOnClickListener(this);
@@ -46,8 +50,8 @@ public class FolderPopUpWindow extends PopupWindow implements View.OnClickListen
         listView.setAdapter(adapter);
 
         setContentView(view);
-        setWidth(ViewGroup.LayoutParams.MATCH_PARENT);  //Èç¹û²»ÉèÖÃ£¬¾ÍÊÇ AnchorView µÄ¿í¶È
-        setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
+        setWidth(ViewGroup.LayoutParams.MATCH_PARENT);  //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã£ï¿½ï¿½ï¿½ï¿½ï¿½ AnchorView ï¿½Ä¿ï¿½ï¿½
+        setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
         setFocusable(true);
         setOutsideTouchable(true);
         setBackgroundDrawable(new ColorDrawable(0));
@@ -77,7 +81,7 @@ public class FolderPopUpWindow extends PopupWindow implements View.OnClickListen
 
     private void enterAnimator() {
         ObjectAnimator alpha = ObjectAnimator.ofFloat(masker, "alpha", 0, 1);
-        ObjectAnimator translationY = ObjectAnimator.ofFloat(listView, "translationY", listView.getHeight(), 0);
+        ObjectAnimator translationY = ObjectAnimator.ofFloat(listView, "translationY", -listView.getHeight(), 0);
         AnimatorSet set = new AnimatorSet();
         set.setDuration(400);
         set.playTogether(alpha, translationY);
@@ -88,11 +92,15 @@ public class FolderPopUpWindow extends PopupWindow implements View.OnClickListen
     @Override
     public void dismiss() {
         exitAnimator();
+        if (mImageView!=null){
+            mImageView.setImageResource(R.mipmap.ic_down);
+        }
+
     }
 
     private void exitAnimator() {
         ObjectAnimator alpha = ObjectAnimator.ofFloat(masker, "alpha", 1, 0);
-        ObjectAnimator translationY = ObjectAnimator.ofFloat(listView, "translationY", 0, listView.getHeight());
+        ObjectAnimator translationY = ObjectAnimator.ofFloat(listView, "translationY", 0, -listView.getHeight());
         AnimatorSet set = new AnimatorSet();
         set.setDuration(300);
         set.playTogether(alpha, translationY);
@@ -139,4 +147,18 @@ public class FolderPopUpWindow extends PopupWindow implements View.OnClickListen
     public interface OnItemClickListener {
         void onItemClick(AdapterView<?> adapterView, View view, int position, long l);
     }
+
+
+    @Override
+    public void showAsDropDown(View anchor) {
+        if ((Build.VERSION.SDK_INT == 24)&&anchor!=null){
+            Rect rect =new Rect();
+            anchor.getGlobalVisibleRect(rect);
+            int h=anchor.getResources().getDisplayMetrics().heightPixels -rect.bottom;
+            setHeight(h);
+        }
+        super.showAsDropDown(anchor);
+    }
+
+
 }
