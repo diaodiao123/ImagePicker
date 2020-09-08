@@ -82,13 +82,6 @@ public class ImageFolderAdapter extends BaseAdapter {
        // holder.imageCount.setText(mActivity.getString(R.string.ip_folder_image_count, folder.images.size()));
         holder.imageCount.setText("("+folder.images.size()+")");
         imagePicker.getImageLoader().displayImage(mActivity, folder.cover.path, holder.cover, mImageSize, mImageSize);
-
-        if (lastSelected == position) {
-            holder.folderCheck.setVisibility(View.VISIBLE);
-        } else {
-            holder.folderCheck.setVisibility(View.INVISIBLE);
-        }
-
         return convertView;
     }
 
