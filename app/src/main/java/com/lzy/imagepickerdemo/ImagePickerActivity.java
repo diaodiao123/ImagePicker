@@ -71,7 +71,6 @@ public class ImagePickerActivity extends AppCompatActivity implements SeekBar.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_picker);
-
         imagePicker = ImagePicker.getInstance();
         imagePicker.setImageLoader(new GlideImageLoader());
         imagePicker.setIToaster(this, new InnerToaster.IToaster() {

@@ -72,7 +72,7 @@ public class ImagePicker {
     private File takeImageFile;
     private Boolean isShowPre=true;//是否展示预览
     private Boolean isSelectSingle=false;//是否每次选择一张图片
-
+    private Boolean isClickImagefinish=true;
     public FreeCropImageView.CropMode mFreeCropMode = com.isseiaoki.simplecropview.FreeCropImageView.CropMode.FREE;
     public boolean isFreeCrop = false;
     private ArrayList<ImageItem> mSelectedImages = new ArrayList<>();
@@ -80,7 +80,7 @@ public class ImagePicker {
     private int mCurrentImageFolderPosition = 0;  //��ǰѡ�е��ļ���λ�� 0��ʾ����ͼƬ
     private List<OnImageSelectedListener> mImageSelectedListeners;          // ͼƬѡ�еļ����ص�
 
-    private static ImagePicker mInstance;
+    public static ImagePicker mInstance;
 
 
     private ImagePicker() {
@@ -431,5 +431,12 @@ public class ImagePicker {
     }
 
 
+    public Boolean getClickImagefinish() {
+        return isClickImagefinish;
+    }
+
+    public void setClickImagefinish(Boolean clickImagefinish) {
+        isClickImagefinish = clickImagefinish;
+    }
 
 }
