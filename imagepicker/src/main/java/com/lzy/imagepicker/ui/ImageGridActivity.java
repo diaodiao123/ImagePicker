@@ -241,7 +241,7 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
                 int index = mImageFolderAdapter.getSelectIndex();
                 index = index == 0 ? index : index - 1;
                 mFolderPopupWindow.setSelection(index);
-                mImageView.setImageResource(R.mipmap.ic_up);
+                mImageView.setImageResource(R.mipmap.image_git_up);
             }
         } else if (id == R.id.tv_cancel) {
             finish();

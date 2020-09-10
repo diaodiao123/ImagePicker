@@ -93,7 +93,7 @@ public class FolderPopUpWindow extends PopupWindow implements View.OnClickListen
     public void dismiss() {
         exitAnimator();
         if (mImageView!=null){
-            mImageView.setImageResource(R.mipmap.ic_down);
+            mImageView.setImageResource(R.mipmap.image_git_down);
         }
 
     }
