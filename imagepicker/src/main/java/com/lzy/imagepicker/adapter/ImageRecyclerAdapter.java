@@ -146,8 +146,11 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
             ivThumb.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (imagePicker.isMultiMode()&&!imagePicker.getShowPre()&&imagePicker.getSelectLimit()==1){
+                      return;
+                    }
                     if (listener != null) listener.onImageItemClick(rootView, imageItem, position);
-                }
+            }
             });
             checkView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -157,10 +160,11 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
                     if (cbCheck.isChecked() && mSelectedImages.size() >= selectLimit) {
                         if (imagePicker.getSelectSingle()&&imagePicker.getSelectLimit()==1){
                             int mPosition = imagePicker.isShowCamera() ? position - 1 : position;
-                            for (int i = 0; i <images.size() ; i++) {
-                                ImageItem item = images.get(i);
-                                imagePicker.addSelectedImageItem(i, item,mPosition==i);
+                            if (mSelectedImages!=null){
+                                mSelectedImages.clear();
                             }
+                            imagePicker.addSelectedImageItem(mPosition, images.get(mPosition),true);
+                            notifyDataSetChanged();
                         }else {
                             InnerToaster.obj(mActivity).show(mActivity.getString(R.string.ip_select_limit, selectLimit));
                             cbCheck.setChecked(false);
