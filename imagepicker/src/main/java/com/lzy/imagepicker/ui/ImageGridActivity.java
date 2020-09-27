@@ -195,10 +195,15 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
     public void onClick(View v) {
         int id = v.getId();
         if (id == R.id.btn_bottom_ok) {
-            Intent intent = new Intent();
-            intent.putExtra(ImagePicker.EXTRA_RESULT_ITEMS, imagePicker.getSelectedImages());
-            setResult(ImagePicker.RESULT_CODE_ITEMS, intent);  //?????????��??��???????????
-            finish();
+            if (imagePicker.isConfirmCrop){
+                Intent intent = new Intent(ImageGridActivity.this, ImageCropActivity.class);
+                startActivityForResult(intent, ImagePicker.REQUEST_CODE_CROP);
+            }else {
+                Intent intent = new Intent();
+                intent.putExtra(ImagePicker.EXTRA_RESULT_ITEMS, imagePicker.getSelectedImages());
+                setResult(ImagePicker.RESULT_CODE_ITEMS, intent);  //?????????��??��???????????
+                finish();
+            }
         } else if (id == R.id.ll_dir) {
             if (mImageFolders == null) {
                 Log.i("ImageGridActivity", "????????????");

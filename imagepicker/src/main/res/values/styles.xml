@@ -20,4 +20,10 @@
         <!-- 指定消失的动画xml -->
         <item name="android:windowExitAnimation">@anim/hide_to_bottom</item>
     </style>
+    <style
+        name="FullTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowFullscreen">true</item>
+
+
+    </style>
 </resources>

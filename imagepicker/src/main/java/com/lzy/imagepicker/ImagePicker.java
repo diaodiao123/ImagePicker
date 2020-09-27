@@ -75,6 +75,9 @@ public class ImagePicker {
     private Boolean isClickImagefinish=true;
     public FreeCropImageView.CropMode mFreeCropMode = com.isseiaoki.simplecropview.FreeCropImageView.CropMode.FREE;
     public boolean isFreeCrop = false;
+
+
+    public boolean isConfirmCrop=false;//选择完成后是否裁剪
     private ArrayList<ImageItem> mSelectedImages = new ArrayList<>();
     private List<ImageFolder> mImageFolders;      //���е�ͼƬ�ļ���
     private int mCurrentImageFolderPosition = 0;  //��ǰѡ�е��ļ���λ�� 0��ʾ����ͼƬ
@@ -437,6 +440,13 @@ public class ImagePicker {
 
     public void setClickImagefinish(Boolean clickImagefinish) {
         isClickImagefinish = clickImagefinish;
+    }
+    public boolean isConfirmCrop() {
+        return isConfirmCrop;
+    }
+
+    public void setConfirmCrop(boolean confirmCrop) {
+        isConfirmCrop = confirmCrop;
     }
 
 }
