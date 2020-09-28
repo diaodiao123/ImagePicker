@@ -124,7 +124,6 @@ public class ImageCropActivity extends ImageBaseActivity implements View.OnClick
         Intent intent = new Intent();
         intent.putExtra(ImagePicker.EXTRA_RESULT_ITEMS, mImageItems);
         setResult(ImagePicker.RESULT_CODE_ITEMS, intent);   //��ѡ����Ҫ�ü�����������
-        finish();
     }
 
     @Override

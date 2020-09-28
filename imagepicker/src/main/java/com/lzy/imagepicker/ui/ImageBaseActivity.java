@@ -12,16 +12,17 @@ import android.view.WindowManager;
 
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.R;
+import com.lzy.imagepicker.util.ImageActivityCollector;
 import com.lzy.imagepicker.util.InnerToaster;
 import com.lzy.imagepicker.view.SystemBarTintManager;
 
 /**
  * ================================================
- * ×÷    Õß£ºjeasonlzy£¨ÁÎ×ÓÒ¢ GithubµØÖ·£ºhttps://github.com/jeasonlzy0216
- * °æ    ±¾£º1.0
- * ´´½¨ÈÕÆÚ£º2016/5/19
- * Ãè    Êö£º
- * ÐÞ¶©ÀúÊ·£º
+ * ï¿½ï¿½    ï¿½ß£ï¿½jeasonlzyï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò¢ Githubï¿½ï¿½Ö·ï¿½ï¿½https://github.com/jeasonlzy0216
+ * ï¿½ï¿½    ï¿½ï¿½ï¿½ï¿½1.0
+ * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú£ï¿½2016/5/19
+ * ï¿½ï¿½    ï¿½ï¿½ï¿½ï¿½
+ * ï¿½Þ¶ï¿½ï¿½ï¿½Ê·ï¿½ï¿½
  * ================================================
  */
 public class ImageBaseActivity extends AppCompatActivity {
@@ -36,7 +37,8 @@ public class ImageBaseActivity extends AppCompatActivity {
         }
         tintManager = new SystemBarTintManager(this);
         tintManager.setStatusBarTintEnabled(true);
-        tintManager.setStatusBarTintResource(R.color.ip_color_primary_dark);  //ÉèÖÃÉÏ·½×´Ì¬À¸µÄÑÕÉ«
+        tintManager.setStatusBarTintResource(R.color.ip_color_primary_dark);  //ï¿½ï¿½ï¿½ï¿½ï¿½Ï·ï¿½×´Ì¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«
+        ImageActivityCollector.addActivity(this);
     }
 
     @TargetApi(19)
