@@ -42,6 +42,7 @@ public class ImageCropActivity extends ImageBaseActivity implements View.OnClick
     private ArrayList<ImageItem> mImageItems;
     private ImagePicker imagePicker;
     private SystemBarTintManager tintManager;
+    public static final String ACTION ="com.ImageCrop.finish";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,9 +122,9 @@ public class ImageCropActivity extends ImageBaseActivity implements View.OnClick
         imageItem.path = file.getAbsolutePath();
         mImageItems.add(imageItem);
 
-        Intent intent = new Intent();
+        Intent intent = new Intent(ACTION);
         intent.putExtra(ImagePicker.EXTRA_RESULT_ITEMS, mImageItems);
-        setResult(ImagePicker.RESULT_CODE_ITEMS, intent);   //��ѡ����Ҫ�ü�����������
+        sendBroadcast(intent);
     }
 
     @Override
