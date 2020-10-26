@@ -583,7 +583,9 @@ public class CropImageView extends AppCompatImageView {
             }
         }
         mSaving = false;
-        croppedImage.recycle();
+        if (croppedImage!=null){
+            croppedImage.recycle();
+        }
     }
 
     private static class InnerHandler extends Handler {

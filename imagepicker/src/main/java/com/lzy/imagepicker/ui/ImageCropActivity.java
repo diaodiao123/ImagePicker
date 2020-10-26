@@ -85,9 +85,19 @@ public class ImageCropActivity extends ImageBaseActivity implements View.OnClick
         mBitmap = BitmapFactory.decodeFile(imagePath, options);
 //        mCropImageView.setImageBitmap(mBitmap);
         //����Ĭ����ת�Ƕ�
-        mCropImageView.setImageBitmap(mCropImageView.rotate(mBitmap, BitmapUtil.getBitmapDegree(imagePath)));
 
 //        mCropImageView.setImageURI(Uri.fromFile(new File(imagePath)));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mImageItems==null||mImageItems.size()<=0){
+            return;
+        }
+        String imagePath = mImageItems.get(0).path;
+        mCropImageView.setImageBitmap(mCropImageView.rotate(mBitmap, BitmapUtil.getBitmapDegree(imagePath)));
+
     }
 
     public int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
