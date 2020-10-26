@@ -23,6 +23,7 @@ import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.MotionEvent;
+import android.widget.Toast;
 
 import com.lzy.imagepicker.R;
 
@@ -535,10 +536,8 @@ public class CropImageView extends AppCompatImageView {
         final Bitmap croppedImage = getCropBitmap(expectWidth, exceptHeight, isSaveRectangle);
         Bitmap.CompressFormat outputFormat = Bitmap.CompressFormat.JPEG;
         File saveFile = createFile(folder, "IMG_", ".jpg");
-        if (mStyle == CropImageView.Style.CIRCLE && !isSaveRectangle) {
-            outputFormat = Bitmap.CompressFormat.PNG;
-            saveFile = createFile(folder, "IMG_", ".png");
-        }
+        outputFormat = Bitmap.CompressFormat.PNG;
+        saveFile = createFile(folder, "IMG_", ".png");
         final Bitmap.CompressFormat finalOutputFormat = outputFormat;
         final File finalSaveFile = saveFile;
         new Thread() {
@@ -583,7 +582,9 @@ public class CropImageView extends AppCompatImageView {
             }
         }
         mSaving = false;
-        croppedImage.recycle();
+        if (croppedImage!=null){
+            croppedImage.recycle();
+        }
     }
 
     private static class InnerHandler extends Handler {
